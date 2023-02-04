@@ -1,10 +1,10 @@
 package guru.springframework.sfgdi.config;
 
-import guru.springframework.sfgdi.services.ConstructorGreetingService;
-import guru.springframework.sfgdi.services.PropertyInjectedGreetingService;
-import guru.springframework.sfgdi.services.SetterInjectedGreetingService;
+import guru.springframework.sfgdi.services.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class GreetingServiceConfig {
@@ -24,4 +24,21 @@ public class GreetingServiceConfig {
         return new SetterInjectedGreetingService();
     }
 
+    @Bean
+    @Primary
+    PrimaryGreetingService primaryGreetingService() {
+        return new PrimaryGreetingService();
+    }
+
+    @Bean("i18nService")
+    @Profile("EN")
+    I18nEnglishGreetingService i18nEnglishGreetingService() {
+        return new I18nEnglishGreetingService();
+    }
+
+    @Bean("i18nService")
+    @Profile({"ES", "default"})
+    I18NSpanishService i18NSpanishService() {
+        return new I18NSpanishService();
+    }
 }
